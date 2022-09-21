@@ -138,12 +138,12 @@ const App = () => {
       const signer = provider.getSigner();
 
       wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-      wavePortalContract.on("New Vote", onNewWave);
+      wavePortalContract.on("NewWave", onNewWave);
     }
 
     return () => {
       if (wavePortalContract) {
-        wavePortalContract.off("New Vote", onNewWave);
+        wavePortalContract.off("NewWave", onNewWave);
       }
     };
   }, []);
