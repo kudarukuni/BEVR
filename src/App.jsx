@@ -72,11 +72,7 @@ const App = () => {
         console.log("Mined -- ", waveTxn.hash);
 
         let count = await wavePortalContract.getTotalWaves();
-        let countUser = await wavePortalContract.getUserWaves();
-        setAllUser(countUser.toString());
         console.log("Retrieved total Vote count...", count.toNumber());
-        console.log("User Votes...", countuser.toNumber());
-        
         getAllWaves();
         
       } else {
@@ -88,35 +84,35 @@ const App = () => {
   }
 
   const getAllWaves = async () => {
-  const { ethereum } = window;
+    const { ethereum } = window;
 
-  try {
-    if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-      const waves = await wavePortalContract.getAllWaves();
+    try {
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+        const waves = await wavePortalContract.getAllWaves();
       
-      let countUser = await wavePortalContract.getUserWaves();
-      setAllUser(countUser.toString());
-      console.log(countUser);
+        let countUser = await wavePortalContract.getUserWaves();
+        setAllUser(countUser.toString());
+        console.log(countUser);
       
-      const wavesCleaned = waves.map(wave => {
-        return {
-          address: wave.waver,
-          timestamp: new Date(wave.timestamp * 1000),
-          message: wave.message,
-        };
-      });
+        const wavesCleaned = waves.map(wave => {
+          return {
+            address: wave.waver,
+            timestamp: new Date(wave.timestamp * 1000),
+            message: wave.message,
+          };
+        });
 
-      setAllWaves(wavesCleaned);
-    } else {
-      console.log("Ethereum object doesn't exist!");
+        setAllWaves(wavesCleaned);
+      } else {
+          console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+          console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
   
   useEffect(() => {
     let wavePortalContract;
@@ -184,9 +180,6 @@ const App = () => {
         <div className="totalWaves">
           <div className="generalWaves">
             Total Votes: {allWaves.length.toString()}
-          </div>
-          <div className="yourWaves">
-            Your Vote Count: {userWaves}
           </div>
         </div>
 
