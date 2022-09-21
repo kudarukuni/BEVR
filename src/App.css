@@ -82,6 +82,29 @@ html{
   transform: translateY(2px);
 }
 
+.input{
+  border-radius: 10px;
+  background-color:lightblue;
+  resize: none;
+}
+
+.totalWaves{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 600px;
+  padding: 30px;
+  color: blacke;
+}
+.generalWaves{
+  background-color:lightblue;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 7px;
+  text-color: orange;
+  
+}
+
 img {
   border-radius: 50%;
   box-shadow: inset 0 0 70px 50px black;
