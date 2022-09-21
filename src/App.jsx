@@ -193,11 +193,11 @@ const App = () => {
         {[...allWaves].reverse().map((wave, index) => {
           return (
             <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px", borderRadius: "10px"}}>
-              <table>
+              <table cellspacing = "5" cellpadding="5">
                 <tr>
-                  <td>Address</td>
-                  <td>Time</td>
-                  <td>Note</td>
+                  <th>Address</th>
+                  <th>Time</th>
+                  <th>Note</th>
                 </tr>
                 <tr>
                   <td>{wave.address}</td>
