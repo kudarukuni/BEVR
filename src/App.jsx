@@ -166,7 +166,7 @@ const App = () => {
         </div>
 
         <div className="bio">
-          <img src="./BEVR.png" alt="Avatar" width="150" height="150"/>
+          <img src="https://media-exp1.licdn.com/dms/image/C5603AQHmz43dk3jKYw/profile-displayphoto-shrink_800_800/0/1647203493721?e=1669248000&v=beta&t=m3OdCcWbr8p_HLdog6iv4x_9Vdx34r307pcq_f_uVRA" alt="Avatar" width="150" height="150"/>
         <font color = "black"><br></br>
           <b><h2><font color = "#140504" face="Abril Fatface">Hi there! I am Kuda and I have worked on a number of projects for some of the top IoT companies in Africa, pretty cool right? Please connect your Ethereum wallet and Vote Kuda for Head Huncho!
           </font></h2></b></font></div>
