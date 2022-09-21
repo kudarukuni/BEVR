@@ -122,7 +122,7 @@ const App = () => {
     let wavePortalContract;
 
     const onNewWave = (from, timestamp, message) => {
-      console.log("NewWave", from, timestamp, message);
+      console.log("New Vote", from, timestamp, message);
       setAllWaves(prevState => [
         ...prevState,
         {
@@ -138,23 +138,22 @@ const App = () => {
       const signer = provider.getSigner();
 
       wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-      wavePortalContract.on("NewWave", onNewWave);
+      wavePortalContract.on("New Vote", onNewWave);
     }
 
     return () => {
       if (wavePortalContract) {
-        wavePortalContract.off("NewWave", onNewWave);
+        wavePortalContract.off("New Vote", onNewWave);
       }
     };
   }, []);
 
   useEffect(() => {
     checkIfWalletIsConnected();
-  }, [])
+  }, []);
   
   return (
     <div className="mainContainer">
-
       <div className="dataContainer">
         <div className="header">
           <h2><p align="centre"><font face="Georgia"><b>
@@ -171,8 +170,7 @@ const App = () => {
           <b><h2><font color = "#140504" face="Abril Fatface">Hi there! I am Kuda and I have worked on a number of projects for some of the top IoT companies in Africa, pretty cool right? Please connect your Ethereum wallet and Vote Kuda for Head Huncho!
           </font></h2></b></font></div>
         <br></br>
-        <textarea className="input" ref={ref} id="message" name="message" rows="5" cols="10">Send Message Along With Vote!</textarea>
-
+        <textarea className="input" ref={ref} id="message" name="message" rows="5" cols="10">Write Note!</textarea>
         <button className="waveButton" onClick={wave}>
           <b><h3>Vote For Me !!</h3></b>
         </button>
@@ -183,21 +181,30 @@ const App = () => {
           </button>
         )}
 
-          <div className="totalWaves">
-            <div className="generalWaves">
+        <div className="totalWaves">
+          <div className="generalWaves">
             Total Votes: {allWaves.length.toString()}
-            </div>
-            <div className="yourWaves">
-            Your Vote Count: {userWaves}
-            </div>
           </div>
+          <div className="yourWaves">
+            Your Vote Count: {userWaves}
+          </div>
+        </div>
 
         {[...allWaves].reverse().map((wave, index) => {
           return (
             <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px", borderRadius: "10px"}}>
-              <div>Address: {wave.address}</div>
-              <div>Time: {wave.timestamp.toString()}</div>
-              <div>Comment: {wave.message}</div>
+              <table>
+                <tr>
+                  <td>Address</td>
+                  <td>Time</td>
+                  <td>Note</td>
+                </tr>
+                <tr>
+                  <td>{wave.address}</td>
+                  <td>{wave.timestamp.toString()}</td>
+                  <td>{wave.message}</td>
+                </tr>
+              </table>
             </div>)
         })}
         
