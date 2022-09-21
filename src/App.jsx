@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./App.css";
 import abi from "./utils/WavePortal.json";
+import {useRef} from 'react';
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
   
   const [allWaves, setAllWaves] = useState([]);
+  const [userWaves, setAllUser]= useState("0");
   const contractAddress = "0x976C4139dbe2113bE823573bd430BCF60788e3D3";
+  const ref = useRef(null);
   const contractABI = abi.abi;
   
   const checkIfWalletIsConnected = async () => {
@@ -60,18 +63,22 @@ const App = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-        let count = await wavePortalContract.getTotalWaves();
-        console.log("Retrieved total Vote count...", count.toNumber());
         
-        const waveTxn = await wavePortalContract.wave("This is a message from your biggest fan, good luck Sir!!!!", { gasLimit: 300000 });
+        const waveTxn = await wavePortalContract.wave(ref.current.value, { gasLimit: 300000 });
+        ref.current.value = '';
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
         console.log("Mined -- ", waveTxn.hash);
 
-        count = await wavePortalContract.getTotalWaves();
+        let count = await wavePortalContract.getTotalWaves();
+        let countUser = await wavePortalContract.getUserWaves();
+        setAllUser(countUser.toString());
         console.log("Retrieved total Vote count...", count.toNumber());
+        console.log("User Votes...", countuser.toNumber());
+        
+        getAllWaves();
+        
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -89,7 +96,11 @@ const App = () => {
       const signer = provider.getSigner();
       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
       const waves = await wavePortalContract.getAllWaves();
-
+      
+      let countUser = await wavePortalContract.getUserWaves();
+      setAllUser(countUser.toString());
+      console.log(countUser);
+      
       const wavesCleaned = waves.map(wave => {
         return {
           address: wave.waver,
@@ -108,35 +119,39 @@ const App = () => {
 };
   
   useEffect(() => {
-  let wavePortalContract;
+    let wavePortalContract;
 
-  const onNewWave = (from, timestamp, message) => {
-    console.log("NewWave", from, timestamp, message);
-    setAllWaves(prevState => [
-      ...prevState,
-      {
-        address: from,
-        timestamp: new Date(timestamp * 1000),
-        message: message,
-      },
-    ]);
-  };
+    const onNewWave = (from, timestamp, message) => {
+      console.log("NewWave", from, timestamp, message);
+      setAllWaves(prevState => [
+        ...prevState,
+        {
+          address: from,
+          timestamp: new Date(timestamp * 1000),
+          message: message,
+        },
+      ]);
+    };
 
-  if (window.ethereum) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
 
-    wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-    wavePortalContract.on("NewWave", onNewWave);
-  }
-
-  return () => {
-    if (wavePortalContract) {
-      wavePortalContract.off("NewWave", onNewWave);
+      wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+      wavePortalContract.on("NewWave", onNewWave);
     }
-  };
-}, []);
 
+    return () => {
+      if (wavePortalContract) {
+        wavePortalContract.off("NewWave", onNewWave);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, [])
+  
   return (
     <div className="mainContainer">
 
@@ -155,6 +170,8 @@ const App = () => {
         <font color = "black"><br></br>
           <b><h2><font color = "#140504" face="Abril Fatface">Hi there! I am Kuda and I've worked on a number of projects for some of the top IoT companies in Africa, pretty cool right? Please connect your Ethereum wallet and Vote Kuda for Head Huncho!
           </font></h2></b></font></div>
+        <br></br>
+        <textarea className="input" ref={ref} id="message" name="message" rows="5" cols="10">Send Message Along With Vote!</textarea>
 
         <button className="waveButton" onClick={wave}>
           <b><h3>Vote For Me !!</h3></b>
@@ -166,9 +183,15 @@ const App = () => {
           </button>
         )}
 
-        {allWaves.map((wave, index) => {
+          <div className="totalWaves">
+            <div className="generalWaves">
+            Total Votes: {allWaves.length.toString()}
+            </div>
+          </div>
+
+        {[...allWaves].reverse().map((wave, index) => {
           return (
-            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px", borderRadius: "10px"}}>
               <div>Address: {wave.address}</div>
               <div>Time: {wave.timestamp.toString()}</div>
               <div>Comment: {wave.message}</div>
