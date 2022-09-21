@@ -187,6 +187,9 @@ const App = () => {
             <div className="generalWaves">
             Total Votes: {allWaves.length.toString()}
             </div>
+            <div className="yourWaves">
+            Your Vote Count: {userWaves}
+            </div>
           </div>
 
         {[...allWaves].reverse().map((wave, index) => {
