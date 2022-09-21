@@ -8,7 +8,7 @@ const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
   
   const [allWaves, setAllWaves] = useState([]);
-  const [userWaves, setAllUser]= useState("0");
+  
   const contractAddress = "0x976C4139dbe2113bE823573bd430BCF60788e3D3";
   const ref = useRef(null);
   const contractABI = abi.abi;
@@ -73,6 +73,7 @@ const App = () => {
 
         let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total Vote count...", count.toNumber());
+        
         getAllWaves();
         
       } else {
@@ -92,10 +93,6 @@ const App = () => {
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
         const waves = await wavePortalContract.getAllWaves();
-      
-        let countUser = await wavePortalContract.getUserWaves();
-        setAllUser(countUser.toString());
-        console.log(countUser);
       
         const wavesCleaned = waves.map(wave => {
           return {
