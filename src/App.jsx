@@ -64,7 +64,7 @@ const App = () => {
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
         
-        const waveTxn = await wavePortalContract.wave(ref.current.value, { gasLimit: 300000 });
+        const waveTxn = await wavePortalContract.wave(ref.current.value);
         ref.current.value = '';
         console.log("Mining...", waveTxn.hash);
 
