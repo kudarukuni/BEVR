@@ -158,9 +158,9 @@ const App = () => {
         </div>
 
         <div className="bio">
-          <img src="../favicon.png" alt="Avatar" width="150" height="150"/>
+          <img src="./favicon.png" width="150" height="150"/>
         <font color = "black"><br></br>
-          <b><h2><font color = "#140504" face="Abril Fatface">Hi there! I am Kuda and I have worked on a number of projects for some of the top IoT companies in Africa, pretty cool right? Please connect your Ethereum wallet and Vote Kuda for Head Huncho!
+          <b><h2><font color = "#140504" face="'Gill Sans', Helvetica, Arial, sans-serif">Hi there! I am Kuda and I have worked on a number of projects for some of the top IoT companies in Africa, pretty cool right? Please connect your Ethereum wallet and Vote Kuda for Head Huncho!
           </font></h2></b></font></div>
         <br></br>
         <textarea className="input" ref={ref} id="message" name="message" rows="5" cols="10">Write Note!</textarea>
