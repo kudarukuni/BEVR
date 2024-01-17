@@ -149,7 +149,7 @@ const App = () => {
     <div className="mainContainer">
       <div className="dataContainer">
         <div className="header">
-          <h2><p align="centre"><font face="Georgia"><b>
+          <h2><p align="centre"><font face="'Gill Sans', Arial, Helvetica, sans-serif, Georgia"><b>
             👨🏽‍⚖️<font color = "#006400">2023</font>
             <font color = "#ffcc00"> BLOCKCHAIN</font>
             <font color ="#d40000"> ELECTION </font>
@@ -158,7 +158,7 @@ const App = () => {
         </div>
 
         <div className="bio">
-          <img src="./logo.jpg" alt="Avatar" width="150" height="150"/>
+          <img src="./favicon.png" alt="Avatar" width="150" height="150"/>
         <font color = "black"><br></br>
           <b><h2><font color = "#140504" face="Abril Fatface">Hi there! I am Kuda and I have worked on a number of projects for some of the top IoT companies in Africa, pretty cool right? Please connect your Ethereum wallet and Vote Kuda for Head Huncho!
           </font></h2></b></font></div>
